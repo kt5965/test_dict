@@ -10,30 +10,28 @@ class VocabularyBook:
 
     def load_vocab(self):
         try:
-            with open('./words.csv', mode='r', newline='', encoding='cp949') as file:
+            with open('./words.csv', mode='r', newline='', encoding='utf-8') as file:
                 reader = csv.reader(file)
                 self.vocab = {rows[0]:[rows[1], int(rows[2])] for rows in reader if rows[0] != "words"}
 
-            with open('./incorrect_words.csv', mode='r', newline='', encoding='cp949') as file:
+            with open('./incorrect_words.csv', mode='r', newline='', encoding='utf-8') as file:
                 reader = csv.reader(file)
                 self.incorrect_vocab = {rows[0]:[rows[1], int(rows[2]), int(rows[3])] for rows in reader if rows[0] != "words"}
-                print(self.vocab)
-                print(self.incorrect_vocab)
                 print("=== Data Upload Success ====")
 
         except FileNotFoundError:
-            with open('./words.csv', mode='r', newline='', encoding='cp949') as file:
+            with open('./words.csv', mode='r', newline='', encoding='utf-8') as file:
                 pass
 
 
     def save_vocab(self):
-        with open('./words.csv', mode='w', newline='', encoding='cp949') as file:
+        with open('./words.csv', mode='w', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
             writer.writerow(['words', 'meaning', 'fail_cnt'])
             for key, value in self.vocab.items():
                 writer.writerow([key, value[0], value[1]])
 
-        with open('./incorrect_words.csv', mode='w', newline='', encoding='cp949') as file:
+        with open('./incorrect_words.csv', mode='w', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
             writer.writerow(['words', 'meaning', 'fail_cnt', 'ans_cnt'])
             for key, value in self.incorrect_vocab.items():
@@ -45,10 +43,8 @@ class VocabularyBook:
         elif memname == "incorrect_vocab":
             self.incorrect_vocab[word] = [meaning, self.vocab[word][1], 0]
 
-    def check_meaning(self, word):
-        answer = input(f"{word} : ")
+    def check_meaning(self, word, answer):
         if word in self.vocab:
-            print(self.vocab[word][0], answer)
             if self.vocab[word][0] == answer:
                 return True
             else:
@@ -56,7 +52,7 @@ class VocabularyBook:
                 if self.vocab[word][1] > 2:
                     self.add_word("incorrect_vocab", word, self.vocab[word][0])
                     self.delete_word("vocab", word)
-                return True
+                return False
         elif word in self.incorrect_vocab:
             if self.incorrect_vocab[word][0] == answer:
                 self.incorrect_vocab[word][2] += 1
@@ -66,11 +62,9 @@ class VocabularyBook:
                 return True
             else:
                 self.incorrect_vocab[word][1] += 1
-                return True
-        else:
-            return False
+                return False
 
-    
+
     def delete_word(self, memname, word):
         if memname == "vocab":
             try:
