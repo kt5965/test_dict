@@ -10,3 +10,4 @@
 /usr/lib/x86_64-linux-gnu/qt5/plugins/platforminputcontexts/lib에 있는 언어 관련 공유라이브러리 파일들을
 /usr/local/lib/python3.8/dist-packages/PyQt5/Qt5/plugins/platforminputcontexts로 옮겨서 해결
 
+![Alt text](image.png)
