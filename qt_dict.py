@@ -7,6 +7,7 @@ class VocabApp(QtWidgets.QDialog):
     def __init__(self):
         super().__init__()
         self.ui = uic.loadUi("MyVoca.ui", self)
+        self.vocab_book = VocabularyBook()
         self.pushButton.clicked.connect(self.start)
         self.show()
         
@@ -15,11 +16,12 @@ class VocabApp(QtWidgets.QDialog):
         revise_cnt = self.spinBox_2.value()
         nw = TestUi(vocab_cnt, revise_cnt)
         nw.exec_()
+
         
 class TestUi(QtWidgets.QDialog):
     def __init__(self, vocab_cnt, revise_cnt):
         super().__init__()
-        self.vocab_book = VocabularyBook()
+
         self.vocab_count = vocab_cnt
         self.revise_count = revise_cnt
         self.meaning_inputs = {}

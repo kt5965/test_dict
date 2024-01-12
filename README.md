@@ -1,4 +1,6 @@
 # test_dict
+단어장 프로그램 개발
+
 ### pyqt5 qlineedit 한글 입력 오류 문제
 
 1. pyqt5내에 한글 입력이 안됨
