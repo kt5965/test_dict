@@ -39,9 +39,11 @@ class VocabularyBook:
 
     def add_word(self, memname, word, meaning):
         if memname == "vocab":
-            self.vocab[word] = [meaning, 0]
+            if word not in self.vocab:
+                self.vocab[word] = [meaning, 0]
         elif memname == "incorrect_vocab":
-            self.incorrect_vocab[word] = [meaning, self.vocab[word][1], 0]
+            if word not in self.incorrect_vocab:
+                self.incorrect_vocab[word] = [meaning, self.vocab[word][1], 0]
 
     def check_meaning(self, word, answer):
         if word in self.vocab:
